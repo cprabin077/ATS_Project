@@ -1,0 +1,14 @@
+<h2>Candidates</h2>
+<a href="/candidates/create/">Add Candidate</a>
+<table border="1">
+<tr>
+  <th>Name</th><th>Score</th><th>Recommendation</th>
+</tr>
+{% for c in candidates %}
+<tr>
+  <td>{{ c.name }}</td>
+  <td>{{ c.ats_score }}</td>
+  <td>{{ c.recommendation }}</td>
+</tr>
+{% endfor %}
+</table>

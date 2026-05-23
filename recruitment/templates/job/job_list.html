@@ -1,0 +1,5 @@
+<h2>Jobs</h2>
+<a href="/jobs/create/">Add Job</a>
+{% for job in jobs %}
+<p>{{ job.title }}</p>
+{% endfor %}
