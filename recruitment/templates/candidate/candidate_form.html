@@ -1,6 +1,73 @@
-<h2>Upload Resume</h2>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Upload</button>
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto mt-8">
+
+    <div class="bg-white shadow-lg rounded-2xl p-8 border">
+
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
+            Add Candidate
+        </h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Candidate Name -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Full Name
+                </label>
+                {{ form.name }}
+            </div>
+
+            <!-- Email -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Email Address
+                </label>
+                {{ form.email }}
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Phone Number
+                </label>
+                {{ form.phone }}
+            </div>
+
+            <!-- Applied Job -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Select Job
+                </label>
+                {{ form.applied_job }}
+            </div>
+
+            <!-- Resume Upload -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Upload Resume (PDF/DOCX)
+                </label>
+                {{ form.resume }}
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 mt-6">
+                <button type="submit" class="btn btn-primary px-4 py-2">
+                    Submit
+                </button>
+
+                <a href="{% url 'candidate_list' %}" class="btn btn-secondary px-4 py-2">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

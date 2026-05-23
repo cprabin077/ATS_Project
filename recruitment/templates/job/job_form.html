@@ -1,6 +1,58 @@
-<h2>Create Job</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto mt-8">
+    
+    <div class="bg-white shadow-lg rounded-2xl p-8 border">
+        
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
+            Create New Job
+        </h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Job Title -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Job Title
+                </label>
+                {{ form.title }}
+            </div>
+
+            <!-- Job Description -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Job Description
+                </label>
+                {{ form.description }}
+            </div>
+
+            <!-- Required Skills -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Required Skills
+                </label>
+                {{ form.required_skills }}
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 mt-6">
+                <button type="submit"
+                    class="btn btn-success px-4 py-2">
+                    Save Job
+                </button>
+
+                <a href="{% url 'job_list' %}"
+                    class="btn btn-secondary px-4 py-2">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
