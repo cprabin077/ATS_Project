@@ -36,10 +36,12 @@
                     <td>{{ job.required_skills }}</td>
                     <td>{{ job.created_at|date:"M d, Y" }}</td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-warning">
+                        <a href="{% url "job_edit" job.id %}" class="btn btn-sm btn-warning">
                             Edit
                         </a>
-                        <a href="#" class="btn btn-sm btn-danger">
+                        <a href= "{% url "job_delete" job.id %}" 
+                        class="btn btn-sm btn-danger"
+                        onclick="return confirm('Delete this job?')">
                             Delete
                         </a>
                     </td>

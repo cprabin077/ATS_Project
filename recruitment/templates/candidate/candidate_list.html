@@ -28,6 +28,7 @@
                     <th>ATS Score</th>
                     <th>Recommendation</th>
                     <th>Resume</th>
+                    <th>Action</th>
                 </tr>
             </thead>
 
@@ -68,6 +69,16 @@
                            target="_blank"
                            class="btn btn-sm btn-outline-secondary">
                             View Resume
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url "candidate_edit" candidate.id %}" class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
+                        <a href="{% url "candidate_delete" candidate.id %}" 
+                        class="btn btn-sm btn-danger"
+                        onclick="return confirm('Delete this candidate?')">
+                            Delete
                         </a>
                     </td>
                 </tr>

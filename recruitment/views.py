@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Candidate, Job
 from .forms import CandidateForm, JobForm
 from .utils import extract_resume_text
@@ -24,6 +24,24 @@ def job_create(request):
             print(form.errors)   # check errors here
 
     return render(request, 'job/job_form.html', {'form': form})
+
+def job_edit(request, id):
+    job = get_object_or_404(Job, id=id)
+    form = JobForm(instance=job)
+
+    if request.method == 'POST':
+        form = JobForm(request.POST, instance=job)
+        if form.is_valid():
+            form.save()
+            return redirect('job_list')
+
+    return render(request, 'job/job_form.html', {'form': form})
+
+
+def job_delete(request, id):
+    job = get_object_or_404(Job, id=id)
+    job.delete()
+    return redirect('job_list')
 
 
 #----------------------------- CANDIDATE ----------------------------------
@@ -70,3 +88,44 @@ def candidate_create(request):
             print("FORM ERRORS:", form.errors)
 
     return render(request, 'candidate/candidate_form.html', {'form': form})
+
+
+def candidate_edit(request, id):
+    candidate = get_object_or_404(Candidate, id=id)
+    form = CandidateForm(instance=candidate)
+
+    if request.method == 'POST':
+        form = CandidateForm(
+            request.POST,
+            request.FILES,
+            instance=candidate
+        )
+
+        if form.is_valid():
+            candidate = form.save()
+
+            resume_text = extract_resume_text(candidate.resume.path)
+            job = candidate.applied_job
+
+            score = calculate_ats_score(
+                job.description + " " + job.required_skills,
+                resume_text
+            )
+
+            candidate.ats_score = score
+            candidate.recommendation = get_recommendation(score)
+            candidate.save()
+
+            return redirect('candidate_list')
+
+    return render(
+        request,
+        'candidate/candidate_form.html',
+        {'form': form}
+    )
+
+
+def candidate_delete(request, id):
+    candidate = get_object_or_404(Candidate, id=id)
+    candidate.delete()
+    return redirect('candidate_list')
